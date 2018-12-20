@@ -1,3 +1,4 @@
+//#define DEBUG
 #include<Wire.h>
 #include<SoftwareSerial.h>
 #include <SPI.h>
@@ -24,12 +25,12 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  // MFRC522 object declaration
 // L298N 馬達驅動板
 // 宣告 MotorR 為右邊
 // 宣告 MotorL 為左邊
-#define MotorRR_I3     6  //定義 I1 接腳
-#define MotorRR_I4     7 //定義 I2 接腳
-#define MotorLL_I1     4 //定義 I3 接腳
-#define MotorLL_I2     5 //定義 I4 接腳
-#define MotorR_PWMR    9  //定義 ENA (PWM調速) 接腳
-#define MotorL_PWML    3  //定義 ENB (PWM調速) 接腳
+#define MotorRR_I3     4  //定義 I1 接腳
+#define MotorRR_I4     5 //定義 I2 接腳
+#define MotorLL_I1     6 //定義 I3 接腳
+#define MotorLL_I2     7 //定義 I4 接腳
+#define MotorR_PWMR    3  //定義 ENA (PWM調速) 接腳
+#define MotorL_PWML    9  //定義 ENB (PWM調速) 接腳
 
 // 循線模組
 // observator : sitting in the back of the car
@@ -39,7 +40,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  // MFRC522 object declaration
 #define R1  A3  // Define First Right Sensor Pin
 #define R2  A4  // Define Second Right Sensor Pin
 
-SoftwareSerial BT(0,1);   //bluetooth RX,TX
+SoftwareSerial BT(11,10);   //bluetooth RX,TX
 
 /*pin definition*/
 
@@ -60,6 +61,9 @@ char   _cmd;                        // Command
 double _integral;                   // Integral from Starting point
 bool R_dir = true;                  // if dir == ture, mean right-motor is forwarding. On the other hand, backwarding.
 bool L_dir = true;                  // if dir == ture, mean Left-motor is forwarding. On the other hand, backwarding.
+int right_motor = 0;
+int left_motor = 0;
+int node_time = 0;
 
 /**************************************/
 /*   Function Prototypes Define Here  */
@@ -124,6 +128,9 @@ void setup()
 void loop()
 {
     /*TODO*/
+   if (_cmd != 'n') {
+    Serial.println(_cmd);    
+   }
    if(_state == START_STATE) Start_Mode();
    else if(_state == REMOTE_STATE) Remote_Mode();
    else if(_state == TRACKING_STATE) Tracing_Mode();
@@ -170,6 +177,7 @@ void SetState() {
          //TODO
          // change _state and reinitialize _cmd
          _state = SETTING_STATE;
+         Serial.println("Changing to Setting Mode...");
          // For debugging you can ignore this
          #ifdef DEBUG
          Serial.println("Changing to Setting Mode...");
@@ -177,7 +185,7 @@ void SetState() {
       } else if (_cmd == 'z') {
         _state = FINAL_STATE;
         /// Do something to check
-
+        Serial.println("Changing to FINAL_State Mode...");
         #ifdef DEBUG
         Serial.println("Changing to Setting Mode...");
         #endif
@@ -228,7 +236,8 @@ void SetState() {
 //         #ifdef DEBUG
          Serial.println("Backing to Remote Mode..."); 
 //         #endif
-      } else { _state = _state; }
+      } 
+      else { _state = _state; }
    }
 }
 
@@ -263,10 +272,10 @@ void Tracing_Mode() {
    
   if ((r2 == HIGH) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {  
     // big right turn
-    MotorWriting(-100, 250);
+    MotorWriting(-250, 250);
   } else if ((r2 == HIGH) && (r1 == HIGH) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
     // small right turn 
-    MotorWriting(-50, 250);
+    MotorWriting(-150, 250);
   } else if ((r2 == HIGH) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
     // small right turn 
     MotorWriting(0, 200);
@@ -293,10 +302,10 @@ void Tracing_Mode() {
     MotorWriting(200, 0);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == HIGH)) {
     // small left turn
-    MotorWriting(250, -50);
+    MotorWriting(250, -150);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == HIGH)) {
     // big left turn
-    MotorWriting(250, -100);
+    MotorWriting(250, -250);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
     MotorWriting(100, 100);
   } else {
@@ -529,7 +538,7 @@ void Final_Mode() {
 }
 
 void get_cmd(char &cmd) {
-   delay(10); // Don't delete its!!
+   delay(30); // Don't delete its!!
    
    /*************************************/
    /* Using BT object to get command */
@@ -539,16 +548,18 @@ void get_cmd(char &cmd) {
      //TODO
      // what I write START
      // just record the char what BT read
-     if (BT.available()) {
-       cmd = BT.read();
-     }else{
-      cmd = 'n';
-     }
+    if(BT.available()) {
+        cmd = BT.read();
+        Serial.print("Received: ");
+        Serial.println(cmd);
+    } else {
+        cmd = 'n';
+    }
      // what I write END
      // For debugging you can ignore this
      #ifdef DEBUG
      Serial.print("Cmd: ");
-     Serial.println(cmd);
+     Serial.println(cmd, DEC);
      #endif
    }
 }
