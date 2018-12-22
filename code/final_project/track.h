@@ -49,7 +49,7 @@ bool Tracing() {
       MotorWriting(100, 180);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
       // center: R 0 0 1 0 0 L
-      MotorWriting(210, 180);
+      MotorWriting(205, 100);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
       // small left turn: R 0 0 1 1 0 L
       MotorWriting(180, 100);

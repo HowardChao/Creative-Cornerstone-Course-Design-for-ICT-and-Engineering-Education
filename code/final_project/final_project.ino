@@ -129,36 +129,44 @@ void Waiting_State() {
     _state = TRACING_STATE;
     if (_cmd == 'f') {
       // Advance !!
-      right_motor = 230;
-      left_motor = 180;
-//      MotorWriting(right_motor, left_motor);
-//      delay(500);
+      right_motor = 210;
+      left_motor = 100;
+      MotorWriting(right_motor, left_motor);
+      delay(500);
     } else if (_cmd == 'b') {
       // U-Turn
+      MotorWriting(205, 100);
+      delay(600);
       right_motor = 180;
       left_motor = -180;
-//      MotorWriting(right_motor, left_motor);
-//      delay(1500);
+      MotorWriting(right_motor, left_motor);
+      delay(1100);
     } else if (_cmd == 'r') {
-      right_motor = 0;
+      MotorWriting(205, 100);
+      delay(600);
+      right_motor = -50;
       left_motor = 200;
-//      MotorWriting(right_motor, left_motor);
-//      delay(1200);
+      MotorWriting(right_motor, left_motor);
+      delay(800);
     } else if (_cmd == 'l') {
       // Turn right
+      MotorWriting(205, 100);
+      delay(600);
       right_motor = 200;
-      left_motor = 0;
-//      MotorWriting(right_motor, left_motor);
-//      delay(1200);
+      left_motor = -50;
+      MotorWriting(right_motor, left_motor);
+      delay(1000);
     } else if (_cmd == 'h') {
       // Halt
       right_motor = 0;
       left_motor = 0;
-//      MotorWriting(right_motor, left_motor);
-//      delay(5000);
-    }
       MotorWriting(right_motor, left_motor);
-      delay(800);
+      delay(5000);
+    }
+//      MotorWriting(right_motor, left_motor);
+//      delay(500);
+      MotorWriting(0, 0);
+      delay(2000);
 #ifdef DEBUG
     Serial.println("Changing to Tracing State...");  // Print out the message about the state change.
 #endif
