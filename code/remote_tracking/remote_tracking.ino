@@ -1,4 +1,4 @@
-//#define DEBUG
+#define DEBUG
 #include<Wire.h>
 #include<SoftwareSerial.h>
 #include <SPI.h>
@@ -27,7 +27,7 @@ enum ControlState {
 #define R1  A3  // Define First Right Sensor Pin
 #define R2  A4  // Define Second Right Sensor Pin
 
-SoftwareSerial BT(11, 10);  //bluetooth RX,TX
+SoftwareSerial BT(2, 8);  //bluetooth RX,TX
 
 /*pin definition*/
 

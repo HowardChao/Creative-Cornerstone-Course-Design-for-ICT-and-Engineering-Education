@@ -25,7 +25,7 @@ enum ControlState {
 #define R1  A3  // Define First Right Sensor Pin
 #define R2  A4  // Define Second Right Sensor Pin
 
-SoftwareSerial BT(11, 10);   // bluetooth's TXD, RXD
+SoftwareSerial BT(2, 8);   // bluetooth's TXD, RXD
 
 /*pin definition*/
 
