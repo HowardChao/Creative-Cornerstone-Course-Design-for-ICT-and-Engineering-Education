@@ -19,7 +19,7 @@ class Scoreboard:
         self.cardValue = dict()
 
         for i in range(len(raw_data)):
-            self.cardValue[self.cardList[i]] = raw_data[i][0]
+            self.cardValue[self.cardList[i]] = raw_data[i][1]
 
         print ("Successfully read the UID file!")
 

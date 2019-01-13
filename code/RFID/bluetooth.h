@@ -15,7 +15,7 @@ void send_byte(byte *id, byte idSize){
      // For debugging you can ignore this
      #ifdef DEBUG
      Serial.print("Sent id: ");
-     Serial.println(id);
+     Serial.println(*id);
      #endif
    }
 }

@@ -1,3 +1,4 @@
+#define DEBUG
 #include<SoftwareSerial.h>
 #include <SPI.h>
 #include <MFRC522.h>
@@ -31,10 +32,29 @@ void setup()
 #include "RFID.h"
 void loop()
 {
-  if (BT.available()) {
+  // This part is for reading messages via bluetooth.
+  /*
+    if (BT.available()) {
     char result = BT.read();
     Serial.println(result);
-    
-  }
+    }
+  */
 
+  // This part is for sending messages via bluetooth.
+  byte* read_UID;
+  byte UID_Size;
+  read_UID = rfid(&UID_Size);
+  if (UID_Size > 0) {
+    send_byte(read_UID, UID_Size);
+#ifdef DEBUG
+    Serial.print("Successfully send out a UID: ");
+    Serial.println(*read_UID);
+#endif
   }
+  else {
+#ifdef DEBUG
+    Serial.println("Nothing is read.");
+#endif
+  }
+  delay(50);
+}

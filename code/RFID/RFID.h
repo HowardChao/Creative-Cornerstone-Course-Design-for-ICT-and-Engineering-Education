@@ -14,7 +14,7 @@ byte* rfid(byte* idSize) {
       //Serial.println(mfrc522.PICC_GetTypeName(piccType));
 
       //Serial.print("UID Size: ");       // 顯示卡片的UID長度值
-      //Serial.println(idSize);
+      //Serial.println(*idSize);
 /*
       if (id[0]==169)
       {Serial.print("success");}  //得到寶藏
