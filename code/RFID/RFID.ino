@@ -20,6 +20,7 @@ void setup()
 
   while (1)
   {
+    break;  // For easier debug.
     if (BT.available())
     {
       char start = BT.read();
@@ -41,20 +42,25 @@ void loop()
   */
 
   // This part is for sending messages via bluetooth.
-  byte* read_UID;
-  byte UID_Size;
+  byte* read_UID = 0;
+  byte UID_Size = 0;
   read_UID = rfid(&UID_Size);
   if (UID_Size > 0) {
-    send_byte(read_UID, UID_Size);
 #ifdef DEBUG
-    Serial.print("Successfully send out a UID: ");
-    Serial.println(*read_UID);
+    Serial.print("UID Size: ");
+    Serial.println(UID_Size);
+    Serial.print("UID: ");
+    for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
+      Serial.print(read_UID[i],HEX);
+    }
+    Serial.println();
 #endif
+    send_byte(read_UID, UID_Size);
   }
   else {
 #ifdef DEBUG
-    Serial.println("Nothing is read.");
+    Serial.println("No.");
 #endif
   }
-  delay(50);
+  delay(100);
 }

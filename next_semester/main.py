@@ -218,9 +218,16 @@ def main():
     # Mode 2: Self-testing mode.
     elif (sys.argv[1] == '2'):
         print("Mode 2: Self-testing mode.")
+        is_waiting = False
         while(1):
-            state_cmd = input("Please enter a mode command: ")
-            interf.ser.SerialWrite(state_cmd)
+            # state_cmd = input("Please enter a mode command: ")
+            # interf.ser.SerialWrite(state_cmd)
+            if interf.wait_for_node():
+                is_waiting = False
+            elif not is_waiting:
+                print("Waiting for a UID......")
+                is_waiting = True
+            time.sleep(0.2)
         # point.add_UID('10000000')
         # point.add_UID('10BA617E')
         # point.add_UID('10BA617E')
