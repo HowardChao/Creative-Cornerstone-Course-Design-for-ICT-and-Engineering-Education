@@ -19,7 +19,7 @@ class interface:
         input("Press enter to start.")
         self.ser.SerialWrite('s')
 
-    def wait_for_node(self):
+    def get_UID(self):
         return self.ser.SerialReadByte()
 
     def send_action(self,dirc):

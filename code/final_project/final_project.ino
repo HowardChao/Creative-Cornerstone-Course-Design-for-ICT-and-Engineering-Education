@@ -172,26 +172,28 @@ void Waiting_State() {
       MotorWriting(right_motor, left_motor);
       delay(5000);
     }
-    //      MotorWriting(right_motor, left_motor);
-    //      delay(500);
-    MotorWriting(0, 0);
-//    byte* read_UID = 0;
-//    byte UID_Size = 0;
-//    read_UID = rfid(&UID_Size);
-//    if (UID_Size > 0) {
-//      send_byte(read_UID, UID_Size);
-//#ifdef DEBUG
-//      Serial.print("Successfully send out a UID: ");
-//      Serial.println(*read_UID);
-//#endif
-//    } else {
-//#ifdef DEBUG
-//      Serial.println("Nothing is read.");
-//#endif
-//    }
+    byte* read_UID = 0;
+    byte UID_Size = 0;
+    read_UID = rfid(&UID_Size);
+    if (UID_Size > 0) {
+#ifdef DEBUG
+      Serial.print("UID Size: ");
+      Serial.println(UID_Size);
+      Serial.print("UID: ");
+      for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
+        Serial.print(read_UID[i], HEX);
+      }
+      Serial.println();
+#endif
+      send_byte(read_UID, UID_Size);
+    }
+    else {
+#ifdef DEBUG
+      Serial.println("No card.");
+#endif
+    }
     delay(2000);
   }
-
 }
 void get_cmd(char &cmd) {
   // Using BT object to get command. Assign value to cmd.

@@ -59,7 +59,7 @@ void loop()
   }
   else {
 #ifdef DEBUG
-    Serial.println("No.");
+    Serial.println("No card.");
 #endif
   }
   delay(100);

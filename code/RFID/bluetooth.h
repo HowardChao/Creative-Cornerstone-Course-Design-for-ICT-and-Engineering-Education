@@ -5,7 +5,7 @@ int ask_direction() {
 
 }
 
-// TODO: send the id back by BT
+// Send the UID by BT
 void send_byte(byte *id, byte idSize) {
   for (byte i = 0; i < idSize; i++) {  // Send UID consequently.
     BT.write(id[i]);

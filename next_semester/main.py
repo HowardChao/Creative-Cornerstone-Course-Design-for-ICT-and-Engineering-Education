@@ -109,14 +109,15 @@ def main():
                 # Send the state to Arduino
                 print("Get action: ", action)
                 interf.send_action(action)
-                for i in range(0,10):
-                    read_byte = interf.wait_for_node()
+                # Try to get UID 10 times. If nothing is get, then we assume no RFID is found.
+                for j in range(0, 10):
+                    read_byte = interf.get_UID()
                     if read_byte:
-                        print("We have read UID", read_byte)
+                        print("We have read a UID:", read_byte)
                         break
                     else:
-                        print("There is no RFID here !!", read_byte)
-                        time.sleep(0.2)
+                        print("No RFID found!")
+                        time.sleep(0.25)
                 # node = 0
                 # get_UID = "just a test"
                 # point.add_UID(get_UID)
@@ -222,7 +223,7 @@ def main():
         while(1):
             # state_cmd = input("Please enter a mode command: ")
             # interf.ser.SerialWrite(state_cmd)
-            if interf.wait_for_node():
+            if interf.get_UID():
                 is_waiting = False
             elif not is_waiting:
                 print("Waiting for a UID......")
@@ -236,7 +237,7 @@ def main():
         # point.add_UID('B547B5CF')
         # point.add_UID('F5816AD0')
         # while True:
-        #     read_byte = interf.wait_for_node()
+        #     read_byte = interf.get_UID()
         #     if read_byte:
         #         print("We have read UID", read_byte)
         #     else:
