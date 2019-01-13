@@ -16,7 +16,7 @@ def main():
     node_dict = maze.getNodeDict()
     car_dir = Direction.SOUTH
     point = score.Scoreboard("data/UID.csv")
-    # interf = interface.interface()         # the part of calling interface.py was commented out.
+    interf = interface.interface()         # the part of calling interface.py was commented out.
 
     if (sys.argv[1] == '0'):
         print("Mode 0")
@@ -109,6 +109,14 @@ def main():
                 # Send the state to Arduino
                 print("Get action: ", action)
                 interf.send_action(action)
+                for i in range(0,10):
+                    read_byte = interf.wait_for_node()
+                    if read_byte:
+                        print("We have read UID", read_byte)
+                        break
+                    else:
+                        print("There is no RFID here !!", read_byte)
+                        time.sleep(0.2)
                 # node = 0
                 # get_UID = "just a test"
                 # point.add_UID(get_UID)
@@ -210,13 +218,16 @@ def main():
     # Mode 2: Self-testing mode.
     elif (sys.argv[1] == '2'):
         print("Mode 2: Self-testing mode.")
-        point.add_UID('10000000')
-        point.add_UID('10BA617E')
-        point.add_UID('10BA617E')
-        point.add_UID('C5F875CF')
-        point.add_UID('B547B5CF')
-        point.add_UID('B547B5CF')
-        point.add_UID('F5816AD0')
+        while(1):
+            state_cmd = input("Please enter a mode command: ")
+            interf.ser.SerialWrite(state_cmd)
+        # point.add_UID('10000000')
+        # point.add_UID('10BA617E')
+        # point.add_UID('10BA617E')
+        # point.add_UID('C5F875CF')
+        # point.add_UID('B547B5CF')
+        # point.add_UID('B547B5CF')
+        # point.add_UID('F5816AD0')
         # while True:
         #     read_byte = interf.wait_for_node()
         #     if read_byte:

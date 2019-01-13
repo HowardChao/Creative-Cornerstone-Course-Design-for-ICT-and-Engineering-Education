@@ -255,7 +255,7 @@ void Remote_Mode() {
   } else if (_cmd == 'u') {
     // forward
     Serial.println("Turn forward!");
-    MotorWriting(200, 100);
+    MotorWriting(200, 135);
   } else if (_cmd == 's') {
     // stop
     Serial.println("Stop!");

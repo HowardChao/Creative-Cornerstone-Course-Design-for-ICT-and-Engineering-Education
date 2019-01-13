@@ -2,6 +2,8 @@
 
 //#include <Wire.h>
 #include <SoftwareSerial.h>
+#include <SPI.h>
+#include <MFRC522.h>
 
 enum ControlState {
   START_STATE,
@@ -25,7 +27,10 @@ enum ControlState {
 #define R1  A3  // Define First Right Sensor Pin
 #define R2  A4  // Define Second Right Sensor Pin
 
-SoftwareSerial BT(2, 8);   // bluetooth's TXD, RXD
+#define RST_PIN      A5        // 讀卡機的重置腳位
+#define SS_PIN       10        // 晶片選擇腳位
+MFRC522 mfrc522(SS_PIN, RST_PIN);  // 建立MFRC522物件
+SoftwareSerial BT(2, 8); // bluetooth's TXD, RXD
 
 /*pin definition*/
 
@@ -54,6 +59,8 @@ void setup() {
   // Setting PINMode
   Serial.begin(9600);
   BT.begin(9600);  //bluetooth initialization
+  SPI.begin();
+  mfrc522.PCD_Init();
   pinMode(MotorR_IN1, OUTPUT);
   pinMode(MotorR_IN2, OUTPUT);
   pinMode(MotorL_IN3, OUTPUT);
@@ -74,6 +81,8 @@ void setup() {
 }
 
 // Import header files.
+#include "RFID.h"
+#include "bluetooth.h"
 #include "track.h"
 
 void loop() {
@@ -129,8 +138,8 @@ void Waiting_State() {
     _state = TRACING_STATE;
     if (_cmd == 'f') {
       // Advance !!
-      right_motor = 210;
-      left_motor = 100;
+      right_motor = 200;
+      left_motor = 135;
       MotorWriting(right_motor, left_motor);
       delay(500);
     } else if (_cmd == 'b') {
@@ -155,7 +164,7 @@ void Waiting_State() {
       right_motor = 200;
       left_motor = -50;
       MotorWriting(right_motor, left_motor);
-      delay(1000);
+      delay(800);
     } else if (_cmd == 'h') {
       // Halt
       right_motor = 0;
@@ -163,16 +172,27 @@ void Waiting_State() {
       MotorWriting(right_motor, left_motor);
       delay(5000);
     }
-//      MotorWriting(right_motor, left_motor);
-//      delay(500);
-      MotorWriting(0, 0);
-      delay(2000);
-#ifdef DEBUG
-    Serial.println("Changing to Tracing State...");  // Print out the message about the state change.
-#endif
+    //      MotorWriting(right_motor, left_motor);
+    //      delay(500);
+    MotorWriting(0, 0);
+//    byte* read_UID = 0;
+//    byte UID_Size = 0;
+//    read_UID = rfid(&UID_Size);
+//    if (UID_Size > 0) {
+//      send_byte(read_UID, UID_Size);
+//#ifdef DEBUG
+//      Serial.print("Successfully send out a UID: ");
+//      Serial.println(*read_UID);
+//#endif
+//    } else {
+//#ifdef DEBUG
+//      Serial.println("Nothing is read.");
+//#endif
+//    }
+    delay(2000);
   }
-}
 
+}
 void get_cmd(char &cmd) {
   // Using BT object to get command. Assign value to cmd.
   if (BT.available()) {

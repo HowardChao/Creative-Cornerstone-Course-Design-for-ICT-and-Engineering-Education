@@ -9,14 +9,13 @@ int ask_direction(){
 void send_byte(byte *id, byte idSize){
 	if(true) {
       if (BT.available()) {
-       BT.write(id);
+       BT.write(*id);
       }
      // what I write END
      // For debugging you can ignore this
      #ifdef DEBUG
      Serial.print("Sent id: ");
-     Serial.println(id);
+     Serial.println(*id);
      #endif
    }
 }
-
