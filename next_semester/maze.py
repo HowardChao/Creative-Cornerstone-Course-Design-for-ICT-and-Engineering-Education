@@ -31,6 +31,7 @@ class Maze:
         #         if not math.isnan(dt[i]):
         #             nd.setSuccessor(int(dt[i]))
 
+        print("Creating the maze............")
         for dt in self.raw_data:
             index = int(dt[0])
             node_tmp = Node(index)
@@ -43,10 +44,10 @@ class Maze:
             self.nodes.append(node_tmp)
             # Add nd_dictionary by {key(index) : value(node)}
             self.nd_dict[index] = node_tmp
-            #TODO: Update the nodes with the information from raw_data
+        print("Maze creation finished!")
         # For debug !
-        for node in self.nodes:
-            print("Index: ", node.index, "\n", node.Successors)
+        # for node in self.nodes:
+        #     print("Index: ", node.index, "\n", node.Successors)
 
 #############################################################
 
