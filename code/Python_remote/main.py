@@ -16,6 +16,7 @@ def main():
     node_dict = maze.getNodeDict()
     car_dir = Direction.SOUTH
     point = score.Scoreboard("data/UID.csv")
+    print("RFID point : ", point)
     interface = student.interface()         # the part of calling student.py was commented out.
 
     # Do not have destination

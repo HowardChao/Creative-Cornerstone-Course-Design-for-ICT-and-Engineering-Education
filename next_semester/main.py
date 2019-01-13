@@ -16,6 +16,7 @@ def main():
     node_dict = maze.getNodeDict()
     car_dir = Direction.SOUTH
     point = score.Scoreboard("data/UID.csv")
+    print("RFID point : ", point)
     interf = interface.interface()         # the part of calling interface.py was commented out.
 
     if (sys.argv[1] == '0'):
@@ -49,11 +50,8 @@ def main():
             ## Check the result for the whole BFS!!!
             for node in ndList:
                 print(node.getIndex())
-            state_cmd = input("Please enter a mode command: ")
-            interf.ser.SerialWrite(state_cmd)
-        ## Testing encounter the node !!
+            ## Testing encounter the node !!
             count = 0
-
             for i in range(1, len(ndList)):
                 current_node = ndList[i-1]
                 next_node = ndList[i]
@@ -216,6 +214,10 @@ def main():
         while(1):
             state_cmd = input("Please enter a mode command: ")
             interf.ser.SerialWrite(state_cmd)
+            for i in range(1, len(ndList)):
+                    node = 0
+                get_UID = "just a test"
+                point.add_UID(get_UID)
 
     
 

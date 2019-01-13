@@ -41,7 +41,17 @@ class bluetooth:
         return ""
 
     def SerialReadByte(self):
-        #TODO: Get the UID from bytes. Notice that the return type should be transformed into hex. 
-        return 0
+        sleep(0.05)
+        waiting = self.ser.inWaiting()
+        rv = self.ser.read(waiting)
+        #rv = self.ser.readline()
+        if(rv):
+            UID = hex(int.from_bytes(rv, byteorder='big', signed=False))
+            #print(UID)
+            print("")
+            self.ser.flushInput()
+            return UID
+        else:
+            return 0
 
 
