@@ -23,18 +23,8 @@ class interface:
         return self.ser.SerialReadByte()
 
     def send_action(self,dirc):
-        if(dirc == maze.Action.ADVANCE):
-            self.ser.SerialWrite('f')
-        elif(dirc == maze.Action.U_TURN):
-            self.ser.SerialWrite('b')
-        elif(dirc == maze.Action.TURN_RIGHT):
-            self.ser.SerialWrite('r')
-        elif(dirc == maze.Action.TURN_LEFT):
-            self.ser.SerialWrite('l')
-        elif(dirc == maze.Action.HALT):
-            self.ser.SerialWrite('h')
-        else:
-            print ('Error: An invalid input for action.')
+        # TODO : send the action to car
+        return
 
     def end_process(self):
         self.ser.SerialWrite('e')
