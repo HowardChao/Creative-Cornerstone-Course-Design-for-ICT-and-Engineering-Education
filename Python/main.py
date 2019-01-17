@@ -56,35 +56,6 @@ def main():
                 action, car_dir = maze.getAction(car_dir, current_node, next_node)
                 # current car position + to node => get action
                 print("Current Car direction: ", car_dir)
-                if action == mz.Action.ADVANCE:
-                    car_dir = car_dir
-                elif action == mz.Action.U_TURN:
-                    if car_dir == Direction.NORTH:
-                        car_dir = Direction.SOUTH
-                    elif car_dir == Direction.SOUTH:
-                        car_dir = Direction.NORTH
-                    elif car_dir == Direction.WEST:
-                        car_dir = Direction.EAST
-                    elif car_dir == Direction.EAST:
-                        car_dir = Direction.WEST
-                elif action == mz.Action.TURN_RIGHT:
-                    if car_dir == Direction.NORTH:
-                        car_dir = Direction.EAST
-                    elif car_dir == Direction.EAST:
-                        car_dir = Direction.SOUTH
-                    elif car_dir == Direction.SOUTH:
-                        car_dir = Direction.WEST
-                    elif car_dir == Direction.WEST:
-                        car_dir = Direction.NORTH
-                elif action == mz.Action.TURN_LEFT:
-                    if car_dir == Direction.NORTH:
-                        car_dir = Direction.WEST
-                    elif car_dir == Direction.WEST:
-                        car_dir = Direction.SOUTH
-                    elif car_dir == Direction.SOUTH:
-                        car_dir = Direction.EAST
-                    elif car_dir == Direction.EAST:
-                        car_dir = Direction.NORTH
                 # When car arrive to a node !!!
                 while (1):
                     python_get_information = interf.ser.SerialReadString()
