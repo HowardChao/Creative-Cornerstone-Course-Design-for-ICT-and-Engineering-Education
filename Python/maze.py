@@ -19,7 +19,7 @@ class Maze:
         """
         self.raw_data = pandas.read_csv(filepath).values
 
-########################### TODO ###########################
+        # TODO
 
         self.nodes = []
         self.nd_dict = dict() # key: index, value: the correspond node
@@ -51,12 +51,12 @@ class Maze:
 
 #############################################################
 
-    
+
 #     def shortestPath(self, nd_from, nd_to):
-#         """ 
-#         return a path (sequence of nodes) from the current node to the nearest unexplored deadend 
+#         """
+#         return a path (sequence of nodes) from the current node to the nearest unexplored deadend
 #         e.g.
-#             1 -- 2 -- 3     
+#             1 -- 2 -- 3
 #                  |    |  ->  shortestPath(1,4) returns [1,2,4]
 #                  4 -- 5
 #         """
@@ -85,7 +85,7 @@ class Maze:
 
 # ##############################################################
 #         return []
-    
+
     def getStartPoint(self):
         if (len(self.nd_dict) < 2):
             print ("Error: the start point is not included.")
@@ -94,41 +94,38 @@ class Maze:
 
     def getNodeDict(self):
         return self.nd_dict
-    
+
     def BFS(self, nd):
         """ return a sequence of nodes from the node to the nearest unexplored deadend"""
         #TODO: design your data structure here for your algorithm
-        queue = [nd]
+        queue = [nd]  # the queue Q
         # explored set
         ndList = []
         transitionTable = dict()
         explored = set()
-        # main loop
+        # BFS loop
         while True:
             if not queue:  # if Q is empty
                 print('End point is not found!')
                 break
-            # u : the last element of queue
-            u = queue.pop()
-            # print(self.nd_dict[u.getSuccessors()[0][0]] in explored)
-            if (len(u.getSuccessors()) is 1) and (self.nd_dict[u.getSuccessors()[0][0]] in explored) :  # check if u is the end node
+            u = queue.pop()  # pop out the last element of Q
+            if (len(u.getSuccessors()) is 1) and (self.nd_dict[u.getSuccessors()[0][0]] in explored):  # check if u is the end node
                 nd_to = u
-                break  # return the transition table
+                break  # Break the BFS loop, which means the transition table is finished.
             explored.add(u)  # add u to explored set
             for v in u.getSuccessors():  # loop over all adjacency of u
                 node = self.nd_dict[v[0]]
                 if (node not in queue) and (node not in explored):
-                    # Add to the first elemenet in queue
+                    # Add to the front of Q
                     queue.insert(0, node)  # add v to Q
                     transitionTable[node] = u
-        # from transition table (transitionTable) to answer (ndList)
+        # Convert the transition table (transitionTable) to the answer route (ndList).
         now_nd = nd_to
-        ndList.insert(0, now_nd)
+        ndList.insert(0, now_nd)  # Insert to the front of ndList so that no need to reverse the list.
         while now_nd is not nd:
             now_nd = transitionTable[now_nd]
-            ndList.insert(0, now_nd)  # insert to the front end, then no need to reverse
-        # what I write end ------
-        return ndList 
+            ndList.insert(0, now_nd)  # Insert to the front of ndList so that no need to reverse the list.
+        return ndList
 
     def BFS_2(self, nd_from, nd_to):
         """ return a sequence of nodes of the shortest path"""
@@ -165,7 +162,7 @@ class Maze:
         # what I write end ------
         for i in ndList:
             print(i.getIndex())
-        return ndList 
+        return ndList
 
     def getAction(self, car_dir, nd_from, nd_to):
         """ return an action and the next direction of the car """
