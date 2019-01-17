@@ -27,29 +27,22 @@ class bluetooth:
     def SerialWrite(self,output):
         # send = 's'.encode("utf-8")
         send = output.encode("utf-8")
-        print(send)
         self.ser.write(send)
 
     def SerialReadString(self):
-        #TODO: Get the information from Bluetooth. Notice that the return type should be transformed into hex. 
+        # TODO: Get the information from Bluetooth. Notice that the return type should be transformed into hex.
         waiting = self.ser.in_waiting
         if waiting >= 0:
             rv = self.ser.read(1).decode("utf-8") 
-            print(rv) #use for debug
-            # reset_input_buffer()
             return rv
         return ""
 
     def SerialReadByte(self):
         sleep(0.05)
         waiting = self.ser.inWaiting()
-        # print("inwaiting =", waiting)
         rv = self.ser.read(waiting)
-        # rv = self.ser.readline()
         if(rv):
             UID = hex(int.from_bytes(rv, byteorder='big', signed=False))
-            print("A UID is read: ", UID)
-            # print("")
             self.ser.flushInput()
             return UID
         else:

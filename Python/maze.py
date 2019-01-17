@@ -21,17 +21,9 @@ class Maze:
         """
         self.raw_data = pandas.read_csv(filepath).values
 
-        # TODO
-
         self.nodes = []
         self.nd_dict = dict()  # key: index, value: the correspond node
         self.explored = set()
-
-        # for dt in self.raw_data:
-        #     nd = node.Node(dt[0])
-        #     for i in range(1,5):
-        #         if not math.isnan(dt[i]):
-        #             nd.setSuccessor(int(dt[i]))
 
         print("Creating the maze............")
         for dt in self.raw_data:
@@ -48,45 +40,6 @@ class Maze:
             # Add nd_dictionary by {key(index) : value(node)}
             self.nd_dict[index] = node_tmp
         print("Maze creation finished!")
-        # For debug !
-        # for node in self.nodes:
-        #     print("Index: ", node.index, "\n", node.Successors)
-
-    #############################################################
-
-    #     def shortestPath(self, nd_from, nd_to):
-    #         """
-    #         return a path (sequence of nodes) from the current node to the nearest unexplored deadend
-    #         e.g.
-    #             1 -- 2 -- 3
-    #                  |    |  ->  shortestPath(1,4) returns [1,2,4]
-    #                  4 -- 5
-    #         """
-
-    # ########################### TODO ###########################
-
-    #         queue = [nd_from]
-    #         explored = [-1] * (len(self.nd_dict) + 1)
-    #         explored[nd_from] = 0
-    #         while len(queue) != 0:
-    #             for succ in self.nd_dict[queue[0]].getSuccessors():
-    #                 if succ == nd_to:
-    #                     ret = [nd_to]
-    #                     curr_nd = queue[0]
-    #                     while explored[curr_nd] != -1:
-    #                         ret.append(curr_nd)
-    #                         curr_nd = explored[curr_nd]
-    #                     ret.reverse()
-    #                     return ret
-
-    #                 if explored[succ] == -1:
-    #                     explored[succ] = queue[0]
-    #                     queue.append(succ)
-
-    #             queue.pop(0)
-
-    # ##############################################################
-    #         return []
 
     def getStartPoint(self):
         if (len(self.nd_dict) < 2):
@@ -134,10 +87,8 @@ class Maze:
         """ return a sequence of nodes of the shortest path"""
         # TODO: similar to BFS but fixed start point and end point
         ndList = []
-        # what I write begin ------
         # initialize
         queue = [nd_from]  # Q: contains only start node initially
-        # print(nd_from)
         transitionTable = dict()
         explored = set()
         # main loop
@@ -162,17 +113,10 @@ class Maze:
         while now_nd is not nd_from:
             now_nd = transitionTable[now_nd]
             ndList.insert(0, now_nd)  # insert to the front end, then no need to reverse
-        # what I write end ------
-        for i in ndList:
-            print(i.getIndex())
         return ndList
 
     def getAction(self, car_dir, nd_from, nd_to):
         """ return an action and the next direction of the car """
-        print(nd_from.getIndex())
-        print(nd_to.getIndex())
-        print(nd_from.getSuccessors())
-        print(nd_to.getSuccessors())
         if nd_from.isSuccessor(nd_to.getIndex()):
             nd_dir = nd_from.getDirection(nd_to.getIndex())
             # TODO: Return the action based on the current car direction and the direction to next node

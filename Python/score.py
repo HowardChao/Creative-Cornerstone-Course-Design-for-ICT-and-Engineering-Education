@@ -27,9 +27,9 @@ class Scoreboard:
         UID = int(UID_str,16)
 
         if UID not in self.cardList:
-            print("invalid UID")
+            print("This UID doesn't exist in the UID list file:", UID)
         elif UID in self.visitList:
-        	print("already visited")
+        	print("This UID is already visited:", UID)
         else:
             point = self.cardValue[UID]
             self.totalScore += point
