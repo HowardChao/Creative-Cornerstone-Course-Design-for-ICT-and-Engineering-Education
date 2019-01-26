@@ -139,13 +139,13 @@ void Waiting_State() {
     if (_cmd == 'f') {
       // Advance !!
       MotorWriting(200, 200);
-      delay(200);
+      delay(300);
       MotorWriting(0, 0);
       delay(2000);
     } else if (_cmd == 'b') {
       // U-Turn
       MotorWriting(200, 200);
-      delay(200);
+      delay(300);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = 180;
@@ -156,31 +156,31 @@ void Waiting_State() {
       delay(2000);
     } else if (_cmd == 'r') {
       MotorWriting(200, 200);
-      delay(200);
+      delay(300);
       MotorWriting(0, 0);
       delay(2000);
-      right_motor = -50;
+      right_motor = -80;
       left_motor = 220;
       MotorWriting(right_motor, left_motor);
-      delay(1000);
+      delay(700);
       MotorWriting(0, 0);
       delay(2000);
     } else if (_cmd == 'l') {
       // Turn right
       MotorWriting(200, 200);
-      delay(200);
+      delay(300);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = 220;
       left_motor = -50;
       MotorWriting(right_motor, left_motor);
-      delay(1000);
+      delay(1100);
       MotorWriting(0, 0);
       delay(2000);
     } else if (_cmd == 'h') {
       // Halt
       MotorWriting(0, 0);
-      delay(2000);
+      delay(300);
       right_motor = 0;
       left_motor = 0;
       MotorWriting(right_motor, left_motor);

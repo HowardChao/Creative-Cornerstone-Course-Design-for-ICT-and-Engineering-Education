@@ -200,7 +200,7 @@ void Tracing_Mode() {
     // big left turn
     MotorWriting(250, -100);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
-    MotorWriting(100, 100);
+    MotorWriting(50, 50);
   } else {
     MotorWriting(-60, -60);
   }

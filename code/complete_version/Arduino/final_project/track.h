@@ -49,16 +49,16 @@ bool Tracing() {
       MotorWriting(50, 200);
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
       // small right turn
-      MotorWriting(100, 150);
+      MotorWriting(90, 180);
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
       // center
-      MotorWriting(200, 200);
+      MotorWriting(120, 200);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
       // center
-      MotorWriting(200, 200);
+      MotorWriting(120, 200);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
       // small left turn
-      MotorWriting(150, 100);
+      MotorWriting(170, 100);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == LOW)) {
       // small left turn
       MotorWriting(200, 50);
