@@ -12,7 +12,7 @@ import os
 
 
 def main():
-    maze = mz.Maze("data/maze_test.csv")
+    maze = mz.Maze("data/maze_new.csv")
     next_nd = maze.getStartPoint()
     node_dict = maze.getNodeDict()
     car_dir = Direction.SOUTH

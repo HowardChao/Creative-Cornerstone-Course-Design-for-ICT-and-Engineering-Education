@@ -44,25 +44,45 @@ bool Tracing() {
       l2 = l2_p;
     }
     if ((r2 == HIGH) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
-      MotorWriting(-100, 200);
+      // big right turn
+      MotorWriting(-100, 250);
     } else if ((r2 == HIGH) && (r1 == HIGH) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
-      MotorWriting(0, 200);
+      // small right turn
+      MotorWriting(-80, 250);
     } else if ((r2 == HIGH) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
-      MotorWriting(80, 200);
-    } else if ((r2 == HIGH) && (r1 == HIGH) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
-      MotorWriting(180, 200);
+      // small right turn
+      MotorWriting(-50, 200);
+    } else if ((r2 == LOW) && (r1 == HIGH) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
+      // small right turn
+      MotorWriting(50, 200);
+    } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
+      // small right turn
+      MotorWriting(90, 180);
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
+      // center
       MotorWriting(200, 200);
-    } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == HIGH) && (l2 == HIGH)) {
-      MotorWriting(200, 180);
+    } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
+      // center
+      MotorWriting(200, 200);
+    } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
+      // small left turn
+      MotorWriting(170, 100);
+    } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == LOW)) {
+      // small left turn
+      MotorWriting(200, 50);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == HIGH)) {
-      MotorWriting(200, 80);
+      // small left turn
+      MotorWriting(200, -50);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == HIGH)) {
-      MotorWriting(200, 0);
+      // small left turn
+      MotorWriting(250, -80);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == HIGH)) {
-      MotorWriting(200, -100);
+      // big left turn
+      MotorWriting(250, -100);
+    } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
+      MotorWriting(100, 100);
     } else {
-//      MotorWriting(-60, -60);
+      MotorWriting(-60, -60);
     }
       r2_p = r2;
       r1_p = r1;
