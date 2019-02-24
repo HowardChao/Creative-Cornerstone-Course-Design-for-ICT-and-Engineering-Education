@@ -123,13 +123,13 @@ void Tracing_State() {
   counter++;
   if (Tracing()) {
     if (counter >= COUNTER_CONST && black_node_counter == 2) {
-     black_node_counter = 0;
-     BT.write('N');
-    _state = WAITING_STATE;
+      black_node_counter = 0;
+      BT.write('N');
+      _state = WAITING_STATE;
 #ifdef DEBUG
-    Serial.println("Changing to Waiting State...");  // Print out the message about the state change.
-#endif 
-    counter = 0;
+      Serial.println("Changing to Waiting State...");  // Print out the message about the state change.
+#endif
+      counter = 0;
     }
   }
 
@@ -146,16 +146,36 @@ void Waiting_State() {
 #ifdef DEBUG
   Serial.println("Waiting...");
 #endif
+  MotorWriting(50, 50);
+  delay(700);
+  byte* read_UID = 0;
+  byte UID_Size = 0;
+  read_UID = rfid(&UID_Size);
+#ifdef DEBUG
+  Serial.print("UID Size: ");
+  Serial.println(UID_Size);
+  Serial.print("UID: ");
+  for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
+    Serial.print(read_UID[i], HEX);
+  }
+  Serial.println();
+#endif
+  send_byte(read_UID, UID_Size);
+
+  //  else {
+  //#ifdef DEBUG
+  //    Serial.println("No card.");
+  //#endif
+  //    BT.write('N');
+  //  }
   get_cmd(_cmd);
   if (_cmd != 'n') {
     // If a command is received, the car should change to Tracing State.
     _state = TRACING_STATE;
     if (_cmd == 'f') {
       // Advance !!
-      MotorWriting(200, 200);
-      delay(700);
-      MotorWriting(0, 0);
-      delay(2000);
+      //      MotorWriting(200, 200);
+      //      delay(700);
     } else if (_cmd == 'b') {
       r2_p = LOW;
       r1_p = LOW;
@@ -163,32 +183,28 @@ void Waiting_State() {
       l1_p = LOW;
       l2_p = HIGH;
       // U-Turn
-      MotorWriting(200, 200);
-      delay(700);
+      //      MotorWriting(200, 200);
+      //      delay(700);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = 180;
       left_motor = -180;
       MotorWriting(right_motor, left_motor);
       delay(900);
-      MotorWriting(0, 0);
-      delay(2000);
     } else if (_cmd == 'r') {
       r2_p = HIGH;
       r1_p = LOW;
       m_p = LOW;
       l1_p = LOW;
       l2_p = LOW;
-      MotorWriting(200, 200);
-      delay(700);
+      //      MotorWriting(200, 200);
+      //      delay(700);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = -80;
       left_motor = 220;
       MotorWriting(right_motor, left_motor);
       delay(500);
-      MotorWriting(0, 0);
-      delay(2000);
     } else if (_cmd == 'l') {
       // Turn right
       r2_p = LOW;
@@ -196,16 +212,14 @@ void Waiting_State() {
       m_p = LOW;
       l1_p = LOW;
       l2_p = HIGH;
-      MotorWriting(200, 200);
-      delay(700);
+      //      MotorWriting(200, 200);
+      //      delay(700);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = 220;
       left_motor = -50;
       MotorWriting(right_motor, left_motor);
       delay(800);
-      MotorWriting(0, 0);
-      delay(2000);
     } else if (_cmd == 'h') {
       // Halt
       MotorWriting(0, 0);
@@ -215,26 +229,10 @@ void Waiting_State() {
       MotorWriting(right_motor, left_motor);
       delay(5000);
     }
-//    byte* read_UID = 0;
-//    byte UID_Size = 0;
-//    read_UID = rfid(&UID_Size);
-//    if (UID_Size > 0) {
-//#ifdef DEBUG
-//      Serial.print("UID Size: ");
-//      Serial.println(UID_Size);
-//      Serial.print("UID: ");
-//      for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
-//        Serial.print(read_UID[i], HEX);
-//      }
-//      Serial.println();
-//#endif
-//      send_byte(read_UID, UID_Size);
-//    }
-//    else {
-//#ifdef DEBUG
-//      Serial.println("No card.");
-//#endif
-//    }
+
+
+    MotorWriting(0, 0);
+    delay(2000);
   }
 }
 void get_cmd(char &cmd) {

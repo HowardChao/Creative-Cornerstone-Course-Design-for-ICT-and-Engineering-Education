@@ -66,6 +66,21 @@ def main():
                     if python_get_information is 'N':
                         count = count + 1
                         print("The car see a node!\n")
+                        while (1):
+                            # state_cmd = input("Please enter a mode command: ")
+                            # interf.ser.SerialWrite(state_cmd)
+                            (read_UID, waiting) = interf.ser.SerialReadByte()
+                            while read_UID == "Not receive" and waiting == 0:
+                                (read_UID, waiting) = interf.ser.SerialReadByte()
+                            while waiting < 4:
+                                (read_UID_tmp, waiting_tmp) = interf.ser.SerialReadByte()
+                                if waiting_tmp != 0:
+                                    waiting = waiting + waiting_tmp
+                                    read_UID = read_UID + read_UID_tmp
+                            print("***** waiting: ", waiting)
+                            if read_UID != "Not receive" and waiting == 4:
+                                print("***** RFID ID: ", read_UID)
+                                break
                         break
 
                 # Tell BT to send the action back to Arduino
@@ -124,8 +139,10 @@ def main():
         print("Mode 2: Self-testing mode.")
         # TODO: You can write your code to test specific function.
         while (1):
-            state_cmd = input("Please enter a mode command: ")
-            interf.ser.SerialWrite(state_cmd)
+            # state_cmd = input("Please enter a mode command: ")
+            # interf.ser.SerialWrite(state_cmd)
+            read_UID = interf.ser.SerialReadByte()
+            print(read_UID)
 
 if __name__ == '__main__':
     main()
