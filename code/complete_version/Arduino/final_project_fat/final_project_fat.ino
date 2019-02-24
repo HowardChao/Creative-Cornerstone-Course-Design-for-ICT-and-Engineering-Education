@@ -50,6 +50,8 @@ int left_motor = 0;
 char _cmd = 'n';
 int COUNTER_CONST = 30;
 int counter = 30;
+int BLACK_NODE_COUNTER = 2;
+int black_node_counter = 0;
 
 /**************************************/
 /*   Function Prototypes Define Here  */
@@ -120,7 +122,8 @@ void Tracing_State() {
 #endif
   counter++;
   if (Tracing()) {
-    if (counter >= COUNTER_CONST) {
+    if (counter >= COUNTER_CONST && black_node_counter == 2) {
+     black_node_counter = 0;
      BT.write('N');
     _state = WAITING_STATE;
 #ifdef DEBUG
@@ -150,9 +153,9 @@ void Waiting_State() {
     if (_cmd == 'f') {
       // Advance !!
       MotorWriting(200, 200);
-      delay(600);
-//      MotorWriting(0, 0);
-//      delay(2000);
+      delay(700);
+      MotorWriting(0, 0);
+      delay(2000);
     } else if (_cmd == 'b') {
       r2_p = LOW;
       r1_p = LOW;
@@ -161,15 +164,15 @@ void Waiting_State() {
       l2_p = HIGH;
       // U-Turn
       MotorWriting(200, 200);
-      delay(600);
+      delay(700);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = 180;
       left_motor = -180;
       MotorWriting(right_motor, left_motor);
-      delay(800);
-//      MotorWriting(0, 0);
-//      delay(2000);
+      delay(900);
+      MotorWriting(0, 0);
+      delay(2000);
     } else if (_cmd == 'r') {
       r2_p = HIGH;
       r1_p = LOW;
@@ -177,15 +180,15 @@ void Waiting_State() {
       l1_p = LOW;
       l2_p = LOW;
       MotorWriting(200, 200);
-      delay(600);
+      delay(700);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = -80;
       left_motor = 220;
       MotorWriting(right_motor, left_motor);
       delay(500);
-//      MotorWriting(0, 0);
-//      delay(2000);
+      MotorWriting(0, 0);
+      delay(2000);
     } else if (_cmd == 'l') {
       // Turn right
       r2_p = LOW;
@@ -194,15 +197,15 @@ void Waiting_State() {
       l1_p = LOW;
       l2_p = HIGH;
       MotorWriting(200, 200);
-      delay(600);
+      delay(700);
       MotorWriting(0, 0);
       delay(2000);
       right_motor = 220;
       left_motor = -50;
       MotorWriting(right_motor, left_motor);
       delay(800);
-//      MotorWriting(0, 0);
-//      delay(2000);
+      MotorWriting(0, 0);
+      delay(2000);
     } else if (_cmd == 'h') {
       // Halt
       MotorWriting(0, 0);

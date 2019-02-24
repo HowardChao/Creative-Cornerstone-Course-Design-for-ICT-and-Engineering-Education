@@ -36,6 +36,7 @@ bool Tracing() {
   Serial.println(high_number);
 #endif
   if (high_number != 5) {
+    black_node_counter = 0;
     if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
       r2 = r2_p;
       r1 = r1_p;
@@ -57,7 +58,7 @@ bool Tracing() {
       MotorWriting(50, 200);
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
       // small right turn
-      MotorWriting(90, 180);
+      MotorWriting(150, 180);
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
       // center
       MotorWriting(200, 200);
@@ -66,7 +67,7 @@ bool Tracing() {
       MotorWriting(200, 200);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
       // small left turn
-      MotorWriting(170, 100);
+      MotorWriting(170, 150);
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == LOW)) {
       // small left turn
       MotorWriting(200, 50);
@@ -82,7 +83,7 @@ bool Tracing() {
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
       MotorWriting(100, 100);
     } else {
-      MotorWriting(-60, -60);
+//      MotorWriting(-60, -60);
     }
       r2_p = r2;
       r1_p = r1;
@@ -93,6 +94,7 @@ bool Tracing() {
   } else {
     if (counter >= COUNTER_CONST) {
       // qualify for new node
+      black_node_counter++;
       MotorWriting(0, 0);
     } else {
       MotorWriting(200, 200);
