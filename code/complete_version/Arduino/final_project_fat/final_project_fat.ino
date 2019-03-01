@@ -38,6 +38,9 @@ int m_p = LOW;
 int l1_p = LOW;
 int l2_p = LOW;
 
+int pre_motor_speed_right = 0;
+int pre_motor_speed_left = 0;
+
 /*pin definition*/
 
 /**************************************/
@@ -52,6 +55,9 @@ int COUNTER_CONST = 30;
 int counter = 30;
 int BLACK_NODE_COUNTER = 2;
 int black_node_counter = 0;
+
+int FORWARD_SWING_COUNTER = 13;
+int forward_swing_counter = 0;
 
 /**************************************/
 /*   Function Prototypes Define Here  */
@@ -146,21 +152,21 @@ void Waiting_State() {
 #ifdef DEBUG
   Serial.println("Waiting...");
 #endif
-  MotorWriting(50, 50);
+  MotorWriting(200, 200);
   delay(700);
-  byte* read_UID = 0;
-  byte UID_Size = 0;
-  read_UID = rfid(&UID_Size);
-#ifdef DEBUG
-  Serial.print("UID Size: ");
-  Serial.println(UID_Size);
-  Serial.print("UID: ");
-  for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
-    Serial.print(read_UID[i], HEX);
-  }
-  Serial.println();
-#endif
-  send_byte(read_UID, UID_Size);
+  //  byte* read_UID = 0;
+  //  byte UID_Size = 0;
+  //  read_UID = rfid(&UID_Size);
+  //#ifdef DEBUG
+  //  Serial.print("UID Size: ");
+  //  Serial.println(UID_Size);
+  //  Serial.print("UID: ");
+  //  for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
+  //    Serial.print(read_UID[i], HEX);
+  //  }
+  //  Serial.println();
+  //#endif
+  //  send_byte(read_UID, UID_Size);
 
   //  else {
   //#ifdef DEBUG
@@ -174,8 +180,41 @@ void Waiting_State() {
     _state = TRACING_STATE;
     if (_cmd == 'f') {
       // Advance !!
-      //      MotorWriting(200, 200);
-      //      delay(700);
+      MotorWriting(200, 200);
+      delay(300);
+      int r2_forward = digitalRead(R2);  // right-outer sensor
+      int r1_forward = digitalRead(R1);  // right-inner sensor
+      int m_forward = digitalRead(M);    // middle sensor
+      int l1_forward = digitalRead(L1);  // left-inner sensor
+      int l2_forward = digitalRead(L2);  // left-outer sensor
+      while (r2_forward == LOW && r1_forward == LOW && m_forward == LOW && l1_forward == LOW && l2_forward == LOW) {        
+        Serial.println("Inside while loop");
+        forward_swing_counter++;
+        if (forward_swing_counter < FORWARD_SWING_COUNTER) {
+          Serial.println("Inside forward_swing_counter forrrr");
+          right_motor = 0;
+          left_motor = 100;
+          MotorWriting(right_motor, left_motor);
+        } else {
+          Serial.println("Inside forward_swing_counter Breakkkkkkk");
+          break ;
+        }
+        Serial.println("Read again !!!!");
+        r2_forward = digitalRead(R2);  // right-outer sensor
+        r1_forward = digitalRead(R1);  // right-inner sensor
+        m_forward = digitalRead(M);    // middle sensor
+        l1_forward = digitalRead(L1);  // left-inner sensor
+        l2_forward = digitalRead(L2);  // left-outer sensor
+      }
+      MotorWriting(0, 0);
+      Serial.println("Outside loop!!!!!");
+      delay(500);
+      forward_swing_counter = 0;
+      r2_p = LOW;
+      r1_p = LOW;
+      m_p = LOW;
+      l1_p = LOW;
+      l2_p = HIGH;
     } else if (_cmd == 'b') {
       r2_p = LOW;
       r1_p = LOW;
@@ -186,7 +225,7 @@ void Waiting_State() {
       //      MotorWriting(200, 200);
       //      delay(700);
       MotorWriting(0, 0);
-      delay(2000);
+      delay(700);
       right_motor = 180;
       left_motor = -180;
       MotorWriting(right_motor, left_motor);
@@ -200,11 +239,11 @@ void Waiting_State() {
       //      MotorWriting(200, 200);
       //      delay(700);
       MotorWriting(0, 0);
-      delay(2000);
+      delay(700);
       right_motor = -80;
       left_motor = 220;
       MotorWriting(right_motor, left_motor);
-      delay(500);
+      delay(300);
     } else if (_cmd == 'l') {
       // Turn right
       r2_p = LOW;
@@ -215,11 +254,11 @@ void Waiting_State() {
       //      MotorWriting(200, 200);
       //      delay(700);
       MotorWriting(0, 0);
-      delay(2000);
+      delay(700);
       right_motor = 220;
       left_motor = -50;
       MotorWriting(right_motor, left_motor);
-      delay(800);
+      delay(500);
     } else if (_cmd == 'h') {
       // Halt
       MotorWriting(0, 0);
@@ -229,10 +268,8 @@ void Waiting_State() {
       MotorWriting(right_motor, left_motor);
       delay(5000);
     }
-
-
     MotorWriting(0, 0);
-    delay(2000);
+    delay(700);
   }
 }
 void get_cmd(char &cmd) {

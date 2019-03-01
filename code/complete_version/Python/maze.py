@@ -45,8 +45,8 @@ class Maze:
         if (len(self.nd_dict) < 2):
             print("Error: the start point is not included.")
             return 0
-        print(self.nd_dict[2])
-        return self.nd_dict[2]
+        print(self.nd_dict[1])
+        return self.nd_dict[1]
 
     def getNodeDict(self):
         return self.nd_dict

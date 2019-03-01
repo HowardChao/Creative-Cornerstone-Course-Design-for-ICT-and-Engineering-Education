@@ -12,7 +12,7 @@ import os
 
 
 def main():
-    maze = mz.Maze("data/maze_test_1.csv")
+    maze = mz.Maze("data/maze_complex.csv")
     next_nd = maze.getStartPoint()
     node_dict = maze.getNodeDict()
     car_dir = Direction.SOUTH
@@ -66,21 +66,21 @@ def main():
                     if python_get_information is 'N':
                         count = count + 1
                         print("The car see a node!\n")
-                        while (1):
-                            # state_cmd = input("Please enter a mode command: ")
-                            # interf.ser.SerialWrite(state_cmd)
-                            (read_UID, waiting) = interf.ser.SerialReadByte()
-                            while read_UID == "Not receive" and waiting == 0:
-                                (read_UID, waiting) = interf.ser.SerialReadByte()
-                            while waiting < 4:
-                                (read_UID_tmp, waiting_tmp) = interf.ser.SerialReadByte()
-                                if waiting_tmp != 0:
-                                    waiting = waiting + waiting_tmp
-                                    read_UID = read_UID + read_UID_tmp
-                            print("***** waiting: ", waiting)
-                            if read_UID != "Not receive" and waiting == 4:
-                                print("***** RFID ID: ", read_UID)
-                                break
+                        # while (1):
+                        #     # state_cmd = input("Please enter a mode command: ")
+                        #     # interf.ser.SerialWrite(state_cmd)
+                        #     (read_UID, waiting) = interf.ser.SerialReadByte()
+                        #     while read_UID == "Not receive" and waiting == 0:
+                        #         (read_UID, waiting) = interf.ser.SerialReadByte()
+                        #     while waiting < 4:
+                        #         (read_UID_tmp, waiting_tmp) = interf.ser.SerialReadByte()
+                        #         if waiting_tmp != 0:
+                        #             waiting = waiting + waiting_tmp
+                        #             read_UID = read_UID + read_UID_tmp
+                        #     print("***** waiting: ", waiting)
+                        #     if read_UID != "Not receive" and waiting == 4:
+                        #         print("***** RFID ID: ", read_UID)
+                        #         break
                         break
 
                 # Tell BT to send the action back to Arduino

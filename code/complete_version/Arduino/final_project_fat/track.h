@@ -11,6 +11,9 @@ bool Tracing() {
   int m = digitalRead(M);    // middle sensor
   int l1 = digitalRead(L1);  // left-inner sensor
   int l2 = digitalRead(L2);  // left-outer sensor
+
+  int tracking_motor_speed_right = 0;
+  int tracking_motor_speed_left = 0;
   
 #ifdef DEBUG
   Serial.print("Sensor values: ");
@@ -46,45 +49,61 @@ bool Tracing() {
     }
     if ((r2 == HIGH) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
       // big right turn
-      MotorWriting(-100, 250);
+      tracking_motor_speed_right = -100;
+      tracking_motor_speed_left = 200;
     } else if ((r2 == HIGH) && (r1 == HIGH) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
       // small right turn
-      MotorWriting(-80, 250);
+      tracking_motor_speed_right = -80;
+      tracking_motor_speed_left = 200;
     } else if ((r2 == HIGH) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
       // small right turn
-      MotorWriting(-50, 200);
+      tracking_motor_speed_right = -50;
+      tracking_motor_speed_left = 150;
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
       // small right turn
-      MotorWriting(50, 200);
+      tracking_motor_speed_right = 100;
+      tracking_motor_speed_left = 180;
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
       // small right turn
-      MotorWriting(150, 180);
+      tracking_motor_speed_right = 150;
+      tracking_motor_speed_left = 180;
     } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
       // center
-      MotorWriting(200, 200);
+      tracking_motor_speed_right = 200;
+      tracking_motor_speed_left = 200;
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
       // center
-      MotorWriting(200, 200);
+      tracking_motor_speed_right = 200;
+      tracking_motor_speed_left = 200;
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
       // small left turn
-      MotorWriting(170, 150);
+      tracking_motor_speed_right = 170;
+      tracking_motor_speed_left = 150;
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == LOW)) {
       // small left turn
-      MotorWriting(200, 50);
+      tracking_motor_speed_right = 170;
+      tracking_motor_speed_left = 100;
     } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == HIGH)) {
       // small left turn
-      MotorWriting(200, -50);
+      tracking_motor_speed_right = 150;
+      tracking_motor_speed_left = -50;
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == HIGH)) {
       // small left turn
-      MotorWriting(250, -80);
+      tracking_motor_speed_right = 200;
+      tracking_motor_speed_left = -80;
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == HIGH)) {
       // big left turn
-      MotorWriting(250, -100);
+      tracking_motor_speed_right = 200;
+      tracking_motor_speed_left = -100;
     } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
+      // This block would not enter ()
       MotorWriting(100, 100);
     } else {
 //      MotorWriting(-60, -60);
     }
+      MotorWriting(tracking_motor_speed_right, tracking_motor_speed_left);
+      pre_motor_speed_right = tracking_motor_speed_right;
+      pre_motor_speed_left = tracking_motor_speed_left;
       r2_p = r2;
       r1_p = r1;
       m_p = m;
