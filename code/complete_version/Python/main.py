@@ -139,10 +139,10 @@ def main():
         print("Mode 2: Self-testing mode.")
         # TODO: You can write your code to test specific function.
         while (1):
-            # state_cmd = input("Please enter a mode command: ")
-            # interf.ser.SerialWrite(state_cmd)
-            read_UID = interf.ser.SerialReadByte()
-            print(read_UID)
+            state_cmd = input("Please enter a mode command: ")
+            interf.ser.SerialWrite(state_cmd)
+            # read_UID = interf.ser.SerialReadByte()
+            # print(read_UID)
 
 if __name__ == '__main__':
     main()

@@ -165,19 +165,19 @@ void Tracing_Mode() {
 
   if ((r2 == HIGH) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
     // big right turn
-    MotorWriting(-100, 250);
+    MotorWriting(-150, 250);
   } else if ((r2 == HIGH) && (r1 == HIGH) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
     // small right turn
-    MotorWriting(-80, 250);
+    MotorWriting(-120, 250);
   } else if ((r2 == HIGH) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
     // small right turn
-    MotorWriting(-50, 200);
+    MotorWriting(-50, 150);
   } else if ((r2 == LOW) && (r1 == HIGH) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
     // small right turn
-    MotorWriting(50, 200);
+    MotorWriting(50, 150);
   } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == LOW) && (l2 == LOW)) {
     // small right turn
-    MotorWriting(100, 150);
+    MotorWriting(100, 200);
   } else if ((r2 == LOW) && (r1 == HIGH) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
     // center
       MotorWriting(200, 200);
@@ -186,23 +186,23 @@ void Tracing_Mode() {
     MotorWriting(200, 200);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == LOW)) {
     // small left turn
-    MotorWriting(150, 100);
+    MotorWriting(200, 100);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == LOW)) {
     // small left turn
-    MotorWriting(200, 50);
+    MotorWriting(150, 50);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == HIGH) && (l1 == HIGH) && (l2 == HIGH)) {
     // small left turn
-    MotorWriting(200, -50);
+    MotorWriting(150, -50);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == HIGH) && (l2 == HIGH)) {
     // small left turn
-    MotorWriting(250, -80);
+    MotorWriting(250, -120);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == HIGH)) {
     // big left turn
-    MotorWriting(250, -100);
+    MotorWriting(250, -150);
   } else if ((r2 == LOW) && (r1 == LOW) && (m == LOW) && (l1 == LOW) && (l2 == LOW)) {
     MotorWriting(50, 50);
   } else {
-    MotorWriting(-60, -60);
+//    MotorWriting(-60, -60);
   }
 }
 
