@@ -14,7 +14,7 @@ bool Tracing() {
 
   int tracking_motor_speed_right = 0;
   int tracking_motor_speed_left = 0;
-  
+
 #ifdef DEBUG
   Serial.print("Sensor values: ");
   Serial.print(r2);
@@ -99,16 +99,16 @@ bool Tracing() {
       // This block would not enter ()
       MotorWriting(100, 100);
     } else {
-//      MotorWriting(-60, -60);
+      //      MotorWriting(-60, -60);
     }
-      MotorWriting(tracking_motor_speed_right, tracking_motor_speed_left);
-      pre_motor_speed_right = tracking_motor_speed_right;
-      pre_motor_speed_left = tracking_motor_speed_left;
-      r2_p = r2;
-      r1_p = r1;
-      m_p = m;
-      l1_p = l1;
-      l2_p = l2;
+    MotorWriting(tracking_motor_speed_right, tracking_motor_speed_left);
+    pre_motor_speed_right = tracking_motor_speed_right;
+    pre_motor_speed_left = tracking_motor_speed_left;
+    r2_p = r2;
+    r1_p = r1;
+    m_p = m;
+    l1_p = l1;
+    l2_p = l2;
     return false;  // Doesn't meet a node.
   } else {
     if (counter >= COUNTER_CONST) {

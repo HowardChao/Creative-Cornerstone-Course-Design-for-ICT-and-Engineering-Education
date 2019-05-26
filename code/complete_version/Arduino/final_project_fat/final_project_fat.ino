@@ -51,8 +51,8 @@ ControlState _state;               // Control State
 int right_motor = 0;
 int left_motor = 0;
 char _cmd = 'n';
-int COUNTER_CONST = 30;
-int counter = 30;
+int COUNTER_CONST = 15;
+int counter = 15;
 int BLACK_NODE_COUNTER = 2;
 int black_node_counter = 0;
 
@@ -152,29 +152,38 @@ void Waiting_State() {
 #ifdef DEBUG
   Serial.println("Waiting...");
 #endif
-  MotorWriting(200, 200);
-  delay(700);
-  //  byte* read_UID = 0;
-  //  byte UID_Size = 0;
-  //  read_UID = rfid(&UID_Size);
-  //#ifdef DEBUG
-  //  Serial.print("UID Size: ");
-  //  Serial.println(UID_Size);
-  //  Serial.print("UID: ");
-  //  for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
-  //    Serial.print(read_UID[i], HEX);
-  //  }
-  //  Serial.println();
-  //#endif
-  //  send_byte(read_UID, UID_Size);
+  MotorWriting(100, 100); // Change here to read RFID!!!!!
+//  delay(700);
 
+
+byte* read_UID = 0;
+byte UID_Size = 0;
+
+  for (int i=0; i<35; i++) {
+    byte* read_UID_tmp = 0;
+    byte UID_Size_tmp = 0;
+    read_UID_tmp = rfid(&UID_Size_tmp);
+    if (*read_UID_tmp != 0 && UID_Size_tmp != 0) {
+      read_UID = read_UID_tmp;
+      UID_Size = UID_Size_tmp;
+    }
+#ifdef DEBUG
+    Serial.print("UID Size: ");
+    Serial.println(UID_Size);
+    Serial.print("UID: ");
+    for (byte i = 0; i < UID_Size; i++) {  // Show UID consequently.
+      Serial.print(read_UID[i], HEX);
+    }
+#endif
+  }
+   get_cmd(_cmd);
+   send_byte(read_UID, UID_Size);
   //  else {
   //#ifdef DEBUG
   //    Serial.println("No card.");
   //#endif
   //    BT.write('N');
   //  }
-  get_cmd(_cmd);
   if (_cmd != 'n') {
     // If a command is received, the car should change to Tracing State.
     _state = TRACING_STATE;

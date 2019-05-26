@@ -35,7 +35,7 @@ class bluetooth:
         if waiting >= 0:
             rv_raw = self.ser.read(1)
             print('rv_rawwwwww: ', rv_raw)
-            # rv = self.ser.read(1).decode("utf-8") 
+            # rv = selfrv_raw.ser.read(1).decode("utf-8")
             return rv_raw.decode("utf-8")
         return ""
 
@@ -44,10 +44,10 @@ class bluetooth:
         waiting = self.ser.inWaiting()
         rv = self.ser.read(waiting)
         if(rv):
+            # print("receive@#$%^&*&^%$#@#$%^&: ", rv)
             UID = hex(int.from_bytes(rv, byteorder='big', signed=False))
             self.ser.flushInput()
             return (UID, waiting)
         else:
+            # print("not receive@#$%^&*&^%$#@#$%^&: ", rv)
             return ("Not receive", waiting)
-
-
